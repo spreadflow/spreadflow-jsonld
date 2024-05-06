@@ -25,7 +25,7 @@ class JsonLdUnpackBase(UnpackBase):
             return refmap[id(value)]
         elif isinstance(value, Mapping):
             return {k: self._replace_by_reference(v, refmap) for k, v in value.items()}
-        elif isinstance(value, Iterable) and not isinstance(value, (str, bytes, bytearray, buffer)):
+        elif isinstance(value, Iterable) and not isinstance(value, (bytes, str)):
             return [self._replace_by_reference(v, refmap) for v in value]
         else:
             return value
