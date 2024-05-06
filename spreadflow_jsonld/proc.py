@@ -31,7 +31,7 @@ class JsonLdUnpackBase(UnpackBase):
     def unpack(self, key, doc):
         subjects = doc[self.key]
         keywords = [self.keywords(subj) for subj in subjects]
-        pairs = zip(subjects, keywords)
+        pairs = list(zip(subjects, keywords))
         refmap = {id(subj): {'@id': kws['@id']} for subj, kws in pairs}
         for subj, kws in pairs:
             result = {k: self._replace_by_reference(v, refmap) for k, v in subj.items()}
