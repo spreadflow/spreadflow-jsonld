@@ -2,7 +2,11 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 
-import collections
+try:
+    from collections.abc import Mapping, Iterable
+except ImportError:
+    from collections import Mapping, Iterable
+
 from pyld import jsonld
 
 from spreadflow_delta.proc import MapReduceBase, UnpackBase
@@ -17,9 +21,9 @@ class JsonLdUnpackBase(UnpackBase):
     def _replace_by_reference(self, value, refmap):
         if id(value) in refmap:
             return refmap[id(value)]
-        elif isinstance(value, collections.Mapping):
+        elif isinstance(value, Mapping):
             return {k: self._replace_by_reference(v, refmap) for k, v in value.items()}
-        elif isinstance(value, collections.Iterable) and not isinstance(value, (str, unicode, bytearray, buffer)):
+        elif isinstance(value, Iterable) and not isinstance(value, (str, bytes, unicode, bytearray, buffer)):
             return [self._replace_by_reference(v, refmap) for v in value]
         else:
             return value
