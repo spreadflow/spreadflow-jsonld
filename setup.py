@@ -19,8 +19,9 @@ setup(
         'spreadflow_jsonld.test'
     ],
     install_requires=[
+        'future',
+        'pyld',
         'SpreadFlowCore',
-        'pyld'
     ],
     tests_require=tests_require,
     extras_require={

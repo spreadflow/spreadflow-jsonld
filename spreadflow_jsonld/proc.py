@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 
+from builtins import (bytes, dict, str, zip)
+
 try:
     from collections.abc import Mapping, Iterable
 except ImportError:
@@ -23,7 +25,7 @@ class JsonLdUnpackBase(UnpackBase):
             return refmap[id(value)]
         elif isinstance(value, Mapping):
             return {k: self._replace_by_reference(v, refmap) for k, v in value.items()}
-        elif isinstance(value, Iterable) and not isinstance(value, (str, bytes, unicode, bytearray, buffer)):
+        elif isinstance(value, Iterable) and not isinstance(value, (str, bytes, bytearray, buffer)):
             return [self._replace_by_reference(v, refmap) for v in value]
         else:
             return value
